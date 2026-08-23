@@ -60,7 +60,7 @@ Crie um banco de dados no PostgreSQL:
 sudo -u postgres psql -c "CREATE DATABASE gerenciamento_funcionarios;"
 ```
 
-### 5. Criar arquivo `.env` na raiz do projeto
+### 5. Criar arquivo `.env` na raiz do projeto (! ! ! EXEMPLO ! ! !)
 
 ```env
 DB_NAME=gerenciamento_funcionarios
@@ -68,7 +68,7 @@ DB_USER=postgres
 DB_PASSWORD=sua_senha
 DB_HOST=localhost
 DB_PORT=5432
-SECRET_KEY=django-insecure-!hab0&z1x+$$m^r@b#7wvqg=z-wcmy&488my%(4w=)cm#%_e7z
+SECRET_KEY=<SUA CHAVE SECRETA AQUI>
 ```
 
 ### 6. Rodar as migrações
@@ -141,7 +141,7 @@ Existem duas formas:
 
 ---
 
-## 🔐 Acessos padrão (exemplo)
+## 🔐 Acessos padrão (! ! ! EXEMPLO ! ! !)
 
 | Perfil | Usuário | Senha |
 |--------|---------|-------|
