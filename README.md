@@ -180,33 +180,6 @@ Existem duas formas:
 
 ---
 
-## ✨ Melhorias implementadas
-
-- ✅ Templates de erro personalizados (403 e 404)
-- ✅ Mensagens de sucesso/erro com ícones
-- ✅ Validações em formulários
-- ✅ Horário local com fuso `America/Fortaleza`
-- ✅ Botão de "← Início" dinâmico (só aparece fora da home)
-- ✅ Interface adaptável ao tema do sistema (dark/light)
-
----
-
-## 👨‍🏫 Avaliação
-
-Projeto desenvolvido para a disciplina **WEB I** – Segunda Unidade.
-
-**Requisitos atendidos:**
-- [x] Class-Based Views exclusivamente
-- [x] CRUD completo (Funcionário e Departamento)
-- [x] ORM com filtros, ordenação e paginação
-- [x] PostgreSQL como banco de dados
-- [x] Autenticação e autorização (grupos e permissões)
-- [x] Pelo menos 2 conceitos das Aulas 09 e 10 (Signals, Logging, Service Layer)
-- [x] Código limpo e organizado
-- [x] Entrega via GitHub
-
----
-
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
