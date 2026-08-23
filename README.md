@@ -83,15 +83,7 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 8. (Opcional) Popular dados iniciais
-
-Se tiver fixtures:
-
-```bash
-python manage.py loaddata fixtures/departamentos.json
-```
-
-### 9. Rodar o servidor
+### 8. Rodar o servidor
 
 ```bash
 python manage.py runserver
@@ -101,14 +93,62 @@ Acesse: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
-## 🔐 Acessos padrão
+## 👥 Como adicionar usuários e permissões
+
+O sistema possui dois perfis principais: **Gerente** e **Funcionário**. Cada um tem permissões específicas.
+
+### 1. Acessar o Django Admin
+
+Com o servidor rodando, acesse: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) e faça login com o superusuário criado.
+
+### 2. Criar os grupos de permissão
+
+- No menu lateral, clique em **"Groups"** (Grupos) e depois em **"Add Group"**.
+- Crie o grupo **"Gerente"** e marque **todas** as permissões do app `core` (add, change, delete, view para todos os modelos).
+- Crie o grupo **"Funcionario"** e marque **apenas** as permissões:
+  - `core | funcionario | Can view funcionario`
+  - `core | registro ponto | Can view registro ponto`
+  - `core | departamento | Can view departamento` (opcional)
+
+### 3. Criar usuários
+
+- No admin, clique em **"Users"** e **"Add User"**.
+- Preencha o nome de usuário, senha e email (se desejar).
+- Após criar, edite o usuário e vá até a seção **"Groups"** para adicioná-lo ao grupo correspondente (Gerente ou Funcionario).
+- Salve.
+
+### 4. Criar funcionários associados
+
+Existem duas formas:
+
+#### Via formulário do site
+
+- Faça login como gerente.
+- Acesse **"Gerenciar Funcionários"** → **"+ Novo Funcionário"**.
+- Preencha os dados (nome, usuário, senha, departamento, cargo, etc.).
+- O sistema criará automaticamente um usuário e o vinculará ao funcionário.
+
+#### Via admin
+
+- No admin, clique em **"Funcionarios"** → **"Add Funcionario"**.
+- Selecione um usuário já existente e preencha os demais campos.
+- Salve.
+
+### 5. Testar permissões
+
+- **Gerente:** pode criar, editar, deletar e visualizar todos os funcionários, departamentos e registros de ponto.
+- **Funcionário:** pode ver apenas seus próprios dados, bater ponto e visualizar seus registros.
+
+---
+
+## 🔐 Acessos padrão (exemplo)
 
 | Perfil | Usuário | Senha |
 |--------|---------|-------|
 | Gerente | `admin` | `admin123` |
 | Funcionário | `joao` | `123456` |
 
-*(Os usuários devem ser criados via admin ou pelo formulário de cadastro)*
+*(Os usuários devem ser criados conforme as instruções acima.)*
 
 ---
 
