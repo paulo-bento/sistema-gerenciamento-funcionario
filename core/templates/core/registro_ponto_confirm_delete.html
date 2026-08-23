@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 40px auto; text-align: center;">
+    <h2 style="color: var(--red-4); margin-bottom: 16px;">Confirmar Exclusão</h2>
+
+    <p style="font-size: 16px; margin-bottom: 8px;">
+        Tem certeza que deseja excluir o registro de ponto de
+        <strong>{{ object.funcionario.user.get_full_name|default:object.funcionario.user.username }}</strong>
+        no dia <strong>{{ object.data|date:"d/m/Y" }}</strong>?
+    </p>
+
+    <p style="color: var(--subtext); font-size: 14px; margin-bottom: 24px;">
+        Esta ação não pode ser desfeita.
+    </p>
+
+    <div style="display: flex; gap: 12px; justify-content: center;">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        </form>
+        <a href="{% url 'core:registro_ponto_list' %}" class="btn">Cancelar</a>
+    </div>
+</div>
+{% endblock %}

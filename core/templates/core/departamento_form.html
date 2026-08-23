@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Departamento{% endblock %}
+
+{% block content %}
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Departamento</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div>
+                <label for="{{ form.nome.id_for_label }}">Nome</label>
+                {{ form.nome }}
+                {% if form.nome.errors %}
+                    <div style="color: var(--red-4); font-size: 13px;">{{ form.nome.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                {{ form.descricao }}
+                {% if form.descricao.errors %}
+                    <div style="color: var(--red-4); font-size: 13px;">{{ form.descricao.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{% url 'core:departamento_list' %}" class="btn">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

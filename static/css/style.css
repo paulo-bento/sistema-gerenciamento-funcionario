@@ -1,0 +1,239 @@
+/* Reset básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', 'Cantarell', system-ui, sans-serif;
+    background: var(--window-bg);
+    color: var(--text);
+    transition: 0.2s;
+    padding: 0;
+}
+/* Variáveis Adwaita */
+:root {
+    --blue-3: #3584e4;
+    --blue-5: #1a5fb4;
+    --green-4: #26a269;
+    --yellow-4: #e5a50a;
+    --red-4: #e01b24;
+    --purple-3: #9141ac;
+    --window-bg: #fafafb;
+    --card-bg: #ffffff;
+    --view-bg: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --text: #1e1e1e;
+    --subtext: #5c5c5c;
+    --radius-window: 12px;
+    --radius-card: 12px;
+    --radius-button: 6px;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --window-bg: #242424;
+        --card-bg: #303030;
+        --view-bg: #1e1e1e;
+        --border: rgba(255,255,255,0.08);
+        --text: #ffffff;
+        --subtext: #b3b3b3;
+    }
+}
+/* Header bar */
+.header-bar {
+    background: var(--window-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.header-bar h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+.header-bar .user-info {
+    font-size: 14px;
+    color: var(--subtext);
+}
+.header-bar a {
+    color: var(--blue-3);
+    text-decoration: none;
+    margin-left: 16px;
+}
+.header-bar a:hover {
+    text-decoration: underline;
+}
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+/* Botões */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+.btn:hover {
+    background: var(--border);
+}
+.btn-primary {
+    background: var(--blue-3);
+    color: white;
+    border: none;
+}
+.btn-primary:hover {
+    background: var(--blue-5);
+}
+.btn-danger {
+    background: var(--red-4);
+    color: white;
+    border: none;
+}
+.btn-danger:hover {
+    background: #c01a22;
+}
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 13px;
+}
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+th {
+    font-weight: 600;
+    color: var(--subtext);
+    font-size: 14px;
+}
+/* Mensagens */
+.messages {
+    list-style: none;
+    margin-bottom: 16px;
+}
+.messages li {
+    padding: 10px 16px;
+    border-radius: var(--radius-button);
+    margin-bottom: 4px;
+}
+.messages .success {
+    background: var(--green-4);
+    color: white;
+}
+.messages .error {
+    background: var(--red-4);
+    color: white;
+}
+.messages .warning {
+    background: var(--yellow-4);
+    color: black;
+}
+.messages .info {
+    background: var(--blue-3);
+    color: white;
+}
+/* Formulários */
+form label {
+    display: block;
+    font-weight: 500;
+    margin-top: 12px;
+}
+form input, form select, form textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    background: var(--view-bg);
+    color: var(--text);
+    font-size: 14px;
+}
+form input:focus, form select:focus {
+    outline: 2px solid rgba(53,132,228,0.4);
+}
+.form-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+}
+/* Paginação */
+.pagination {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+}
+.pagination a, .pagination span {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    text-decoration: none;
+    color: var(--text);
+}
+.pagination .current {
+    background: var(--blue-3);
+    color: white;
+}
+/* Filtros */
+.filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+.filters input, .filters select {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+}
+.filters .btn {
+    align-self: flex-end;
+}
+/* Stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.stat-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.stat-box .number {
+    font-size: 28px;
+    font-weight: 700;
+}
+.stat-box .label {
+    font-size: 14px;
+    color: var(--subtext);
+}

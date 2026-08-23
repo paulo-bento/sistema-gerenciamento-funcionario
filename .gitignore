@@ -1,0 +1,33 @@
+# Ambiente virtual
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Banco de dados (SQLite)
+db.sqlite3
+*.sqlite3
+
+# Arquivos de mídia e estáticos
+media/
+staticfiles/
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Django
+*.pot
+*.mo
+
+# Outros
+.DS_Store

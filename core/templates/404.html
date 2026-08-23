@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Página Não Encontrada{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 60px auto; text-align: center;">
+    <h2 style="color: var(--yellow-4);">🔍 Página Não Encontrada</h2>
+    <p style="font-size: 16px; margin: 16px 0;">
+        A página que você está procurando não existe ou foi removida.
+    </p>
+    <p style="color: var(--subtext); font-size: 14px;">
+        Verifique se o endereço está correto ou volte para o início.
+    </p>
+    <div style="margin-top: 24px;">
+        <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Voltar ao Dashboard</a>
+    </div>
+</div>
+{% endblock %}

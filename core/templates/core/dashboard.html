@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+
+    {% if is_gerente %}
+        <!-- Estatísticas para gerente -->
+        <div class="stats">
+            <div class="stat-box">
+                <div class="number">{{ total_funcionarios }}</div>
+                <div class="label">Funcionários</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">{{ total_departamentos }}</div>
+                <div class="label">Departamentos</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">R$ {{ media_salarial|floatformat:2 }}</div>
+                <div class="label">Média Salarial</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Últimos Registros de Ponto</h2>
+            {% if ultimos_registros %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Funcionário</th>
+                            <th>Data</th>
+                            <th>Horas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in ultimos_registros %}
+                            <tr>
+                                <td>{{ registro.funcionario.user.get_full_name|default:registro.funcionario.user.username }}</td>
+                                <td>{{ registro.data|date:"d/m/Y" }}</td>
+                                <td>{{ registro.horas_trabalhadas }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Nenhum registro de ponto encontrado.</p>
+            {% endif %}
+        </div>
+
+        <!-- Botões para Gerente -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="{% url 'core:funcionario_list' %}" class="btn btn-primary">Gerenciar Funcionários</a>
+            <a href="{% url 'core:departamento_list' %}" class="btn">Gerenciar Departamentos</a>
+            <a href="{% url 'core:registro_ponto_list' %}" class="btn">Gerenciar Registros de Ponto</a>
+            <a href="{% url 'core:bater_ponto' %}" class="btn">Bater Ponto</a>
+        </div>
+
+    {% else %}
+        <!-- Dashboard para funcionário -->
+        <div class="card">
+            <h2>Bem-vindo, {{ user.get_full_name|default:user.username }}!</h2>
+            <p style="color: var(--subtext); margin-top: 8px;">
+                Aqui estão seus últimos registros de ponto:
+            </p>
+            {% if ultimos_registros %}
+                <table style="margin-top: 16px;">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Horas</th>
+                            <th>Observação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in ultimos_registros %}
+                            <tr>
+                                <td>{{ registro.data|date:"d/m/Y" }}</td>
+                                <td>{{ registro.horas_trabalhadas }}</td>
+                                <td>{{ registro.observacao|default:"-" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p style="color: var(--subtext); margin-top: 16px;">Nenhum registro de ponto encontrado.</p>
+            {% endif %}
+        </div>
+
+        <!-- Botões para Funcionário -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+            <a href="{% url 'core:bater_ponto' %}" class="btn btn-primary">Bater Ponto</a>
+            <a href="{% url 'core:meus_registros' %}" class="btn">Ver todos os meus registros</a>
+            <a href="{% url 'core:funcionario_detail' funcionario.pk %}" class="btn">Meu perfil</a>
+        </div>
+    {% endif %}
+{% endblock %}

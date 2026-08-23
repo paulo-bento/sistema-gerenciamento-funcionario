@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 60px auto; text-align: center;">
+    <h2 style="margin-bottom: 24px;">Entrar no Sistema</h2>
+
+    <form method="post" style="text-align: left;">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div style="background: var(--red-4); color: white; padding: 12px 16px; border-radius: var(--radius-button); margin-bottom: 16px;">
+                <strong>⚠️ Não foi possível fazer login.</strong><br>
+                Verifique se o usuário e a senha estão corretos e tente novamente.
+                <br><small style="opacity: 0.8;">Dica: a senha diferencia maiúsculas de minúsculas.</small>
+            </div>
+        {% endif %}
+
+        <div>
+            <label for="{{ form.username.id_for_label }}">Usuário</label>
+            {{ form.username }}
+        </div>
+
+        <div style="margin-top: 16px;">
+            <label for="{{ form.password.id_for_label }}">Senha</label>
+            {{ form.password }}
+        </div>
+
+        <div class="form-actions" style="margin-top: 24px; justify-content: center;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+        </div>
+
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <p style="margin-top: 20px; color: var(--subtext); font-size: 14px;">
+        Use as credenciais fornecidas pelo administrador.
+    </p>
+</div>
+{% endblock %}

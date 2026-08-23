@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Registro de Ponto{% endblock %}
+
+{% block content %}
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Registro de Ponto</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div>
+                <label for="{{ form.funcionario.id_for_label }}">Funcionário</label>
+                {{ form.funcionario }}
+            </div>
+
+            <div>
+                <label for="{{ form.data.id_for_label }}">Data</label>
+                {{ form.data }}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <label for="{{ form.entrada.id_for_label }}">Entrada</label>
+                    {{ form.entrada }}
+                </div>
+                <div>
+                    <label for="{{ form.saida.id_for_label }}">Saída</label>
+                    {{ form.saida }}
+                </div>
+            </div>
+
+            <div>
+                <label for="{{ form.observacao.id_for_label }}">Observação</label>
+                {{ form.observacao }}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{% url 'core:registro_ponto_list' %}" class="btn">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

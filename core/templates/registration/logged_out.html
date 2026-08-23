@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 60px auto; text-align: center;">
+    <h2 style="margin-bottom: 16px;">Você saiu do sistema</h2>
+    <p style="color: var(--subtext); margin-bottom: 24px;">
+        Sua sessão foi encerrada com sucesso.
+    </p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Fazer login novamente</a>
+</div>
+{% endblock %}

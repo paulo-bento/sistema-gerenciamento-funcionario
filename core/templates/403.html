@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Acesso Negado{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 60px auto; text-align: center;">
+    <h2 style="color: var(--red-4);">🚫 Acesso Negado</h2>
+    <p style="font-size: 16px; margin: 16px 0;">
+        Você não tem permissão para acessar esta página.
+    </p>
+    <p style="color: var(--subtext); font-size: 14px;">
+        Esta área é restrita a usuários com permissões específicas.
+    </p>
+    <div style="margin-top: 24px;">
+        <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Voltar ao Dashboard</a>
+    </div>
+</div>
+{% endblock %}

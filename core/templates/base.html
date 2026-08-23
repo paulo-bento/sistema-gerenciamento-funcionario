@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Funcionários{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header-bar">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Só mostra o botão "← Início" se NÃO estiver na dashboard -->
+            {% if request.path != '/' %}
+                <a href="{% url 'core:dashboard' %}" style="text-decoration: none; color: var(--text); font-weight: 700; font-size: 20px;">
+                    ← Início
+                </a>
+            {% endif %}
+            <h1 style="font-size: 20px; font-weight: 700; margin: 0;">
+                Gestão de Funcionários
+            </h1>
+        </div>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                Olá, {{ user.get_full_name|default:user.username }}
+                <form action="{% url 'logout' %}" method="post" style="display: inline; margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: var(--blue-3); cursor: pointer; font-size: 14px; text-decoration: underline; padding: 0; font-family: inherit;">
+                        Sair
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Entrar</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Funcionário{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Funcionário</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Campos do User -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <label for="{{ form.first_name.id_for_label }}">Nome</label>
+                    {{ form.first_name }}
+                </div>
+                <div>
+                    <label for="{{ form.last_name.id_for_label }}">Sobrenome</label>
+                    {{ form.last_name }}
+                </div>
+                <div>
+                    <label for="{{ form.username.id_for_label }}">Usuário</label>
+                    {{ form.username }}
+                </div>
+                <div>
+                    <label for="{{ form.email.id_for_label }}">E-mail</label>
+                    {{ form.email }}
+                </div>
+                <div>
+                    <label for="{{ form.password.id_for_label }}">Senha</label>
+                    {{ form.password }}
+                    <small style="color: var(--subtext); font-size: 12px;">
+                        {% if form.instance.pk %}Deixe em branco para manter a atual.{% endif %}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Campos do Funcionario -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 16px;">
+                <div>
+                    <label for="{{ form.departamento.id_for_label }}">Departamento</label>
+                    {{ form.departamento }}
+                </div>
+                <div>
+                    <label for="{{ form.cargo.id_for_label }}">Cargo</label>
+                    {{ form.cargo }}
+                </div>
+                <div>
+                    <label for="{{ form.salario.id_for_label }}">Salário</label>
+                    {{ form.salario }}
+                </div>
+                <div>
+                    <label for="{{ form.horas_semana.id_for_label }}">Horas/Semana</label>
+                    {{ form.horas_semana }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{% url 'core:funcionario_list' %}" class="btn">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

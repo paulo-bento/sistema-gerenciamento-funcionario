@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Funcionários{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Funcionários</h2>
+        <a href="{% url 'core:funcionario_create' %}" class="btn btn-primary">+ Novo Funcionário</a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card">
+        <form method="get" class="filters">
+            <input type="text" name="nome" placeholder="Buscar por nome..." value="{{ request.GET.nome|default:'' }}">
+            <select name="departamento">
+                <option value="">Todos os departamentos</option>
+                {% for dept in departamentos %}
+                    <option value="{{ dept.id }}" {% if request.GET.departamento == dept.id|stringformat:"s" %}selected{% endif %}>
+                        {{ dept.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+            <select name="cargo">
+                <option value="">Todos os cargos</option>
+                {% for codigo, nome in cargos %}
+                    <option value="{{ codigo }}" {% if request.GET.cargo == codigo %}selected{% endif %}>
+                        {{ nome }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{% url 'core:funcionario_list' %}" class="btn">Limpar</a>
+        </form>
+    </div>
+
+    <!-- Tabela -->
+    <div class="card">
+        {% if funcionarios %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Departamento</th>
+                        <th>Cargo</th>
+                        <th>Salário</th>
+                        <th>Horas/Semana</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for funcionario in funcionarios %}
+                        <tr>
+                            <td>{{ funcionario.user.get_full_name|default:funcionario.user.username }}</td>
+                            <td>{{ funcionario.departamento.nome|default:"—" }}</td>
+                            <td>{{ funcionario.get_cargo_display }}</td>
+                            <td>R$ {{ funcionario.salario|floatformat:2 }}</td>
+                            <td>{{ funcionario.horas_semana }}h</td>
+                            <td>
+                                <a href="{% url 'core:funcionario_detail' funcionario.pk %}" class="btn btn-sm">Detalhes</a>
+                                <a href="{% url 'core:funcionario_update' funcionario.pk %}" class="btn btn-sm">Editar</a>
+                                <a href="{% url 'core:funcionario_delete' funcionario.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Paginação -->
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Primeira</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Anterior</a>
+                    {% endif %}
+
+                    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Próxima</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Última</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Nenhum funcionário cadastrado.</p>
+        {% endif %}
+    </div>
+{% endblock %}

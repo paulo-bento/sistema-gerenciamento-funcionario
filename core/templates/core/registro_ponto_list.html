@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Registros de Ponto{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2>Registros de Ponto</h2>
+        {% if is_gerente %}
+            <a href="{% url 'core:registro_ponto_create' %}" class="btn btn-primary">+ Adicionar Registro</a>
+        {% endif %}
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters">
+        <form method="get" style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
+            <input type="date" name="data_inicio" value="{{ request.GET.data_inicio }}" placeholder="Data início">
+            <input type="date" name="data_fim" value="{{ request.GET.data_fim }}" placeholder="Data fim">
+            {% if is_gerente %}
+                <select name="funcionario">
+                    <option value="">Todos os funcionários</option>
+                    {% for f in funcionarios %}
+                        <option value="{{ f.id }}" {% if request.GET.funcionario == f.id|stringformat:"s" %}selected{% endif %}>
+                            {{ f.user.get_full_name|default:f.user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{% url 'core:registro_ponto_list' %}" class="btn">Limpar</a>
+        </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="card">
+        {% if registros %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Funcionário</th>
+                        <th>Data</th>
+                        <th>Entrada</th>
+                        <th>Saída</th>
+                        <th>Horas</th>
+                        <th>Observação</th>
+                        {% if is_gerente %}
+                            <th>Ações</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reg in registros %}
+                        <tr>
+                            <td>{{ reg.funcionario.user.get_full_name|default:reg.funcionario.user.username }}</td>
+                            <td>{{ reg.data|date:"d/m/Y" }}</td>
+                            <td>{{ reg.entrada|date:"H:i" }}</td>
+                            <td>{{ reg.saida|date:"H:i"|default:"-" }}</td>
+                            <td>{{ reg.horas_trabalhadas|default:"-" }}</td>
+                            <td>{{ reg.observacao|default:"-" }}</td>
+                            {% if is_gerente %}
+                                <td>
+                                    <a href="{% url 'core:registro_ponto_update' reg.pk %}" class="btn btn-sm">Editar</a>
+                                    <a href="{% url 'core:registro_ponto_delete' reg.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; Primeira</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    {% endif %}
+
+                    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p style="text-align: center; color: var(--subtext); padding: 20px 0;">
+                Nenhum registro de ponto encontrado.
+            </p>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'core:dashboard' %}" class="btn">Voltar ao Dashboard</a>
+    </div>
+{% endblock %}

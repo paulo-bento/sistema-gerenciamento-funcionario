@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes de {{ funcionario.user.get_full_name|default:funcionario.user.username }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 style="margin-bottom: 20px; font-size: 22px;">
+        {{ funcionario.user.get_full_name|default:funcionario.user.username }}
+    </h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; background: var(--view-bg); padding: 20px; border-radius: var(--radius-card);">
+        <div><strong>Usuário:</strong> {{ funcionario.user.username }}</div>
+        <div><strong>E-mail:</strong> {{ funcionario.user.email }}</div>
+        <div><strong>Departamento:</strong> {{ funcionario.departamento.nome|default:"Não definido" }}</div>
+        <div><strong>Cargo:</strong> {{ funcionario.get_cargo_display }}</div>
+        <div><strong>Salário:</strong> R$ {{ funcionario.salario|floatformat:2 }}</div>
+        <div><strong>Horas/Semana:</strong> {{ funcionario.horas_semana }}h</div>
+        <div><strong>Data de Contratação:</strong> {{ funcionario.data_contratacao|date:"d/m/Y" }}</div>
+        <div><strong>Status:</strong>
+            {% if funcionario.is_deleted %}
+                <span style="color: var(--red-4);">Inativo</span>
+            {% else %}
+                <span style="color: var(--green-4);">Ativo</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+        <h3 style="font-size: 18px; margin-bottom: 12px;">Registros de Ponto</h3>
+        {% if registros %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horas</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros %}
+                        <tr>
+                            <td>{{ registro.data|date:"d/m/Y" }}</td>
+                            <td>{{ registro.horas_trabalhadas }}</td>
+                            <td>{{ registro.observacao|default:"-" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="color: var(--subtext);">Nenhum registro de ponto encontrado.</p>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="{% url 'core:funcionario_update' funcionario.pk %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'core:funcionario_delete' funcionario.pk %}" class="btn btn-danger">Deletar</a>
+        <a href="{% url 'core:funcionario_list' %}" class="btn">Voltar</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Departamentos{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2>Departamentos</h2>
+        <a href="{% url 'core:departamento_create' %}" class="btn btn-primary">+ Novo Departamento</a>
+    </div>
+
+    <div class="card">
+        {% if departamentos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Criado em</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dept in departamentos %}
+                        <tr>
+                            <td><strong>{{ dept.nome }}</strong></td>
+                            <td>{{ dept.descricao|default:"-" }}</td>
+                            <td>{{ dept.created_at|date:"d/m/Y" }}</td>
+                            <td>
+                                <a href="{% url 'core:departamento_update' dept.pk %}" class="btn btn-sm">Editar</a>
+                                <a href="{% url 'core:departamento_delete' dept.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; Primeira</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    {% endif %}
+
+                    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Nenhum departamento cadastrado.</p>
+        {% endif %}
+    </div>
+{% endblock %}

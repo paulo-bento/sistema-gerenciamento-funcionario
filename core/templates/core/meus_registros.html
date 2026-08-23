@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Registros de Ponto{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2>Meus Registros de Ponto</h2>
+        <span style="font-size: 14px; color: var(--subtext);">
+            Funcionário: {{ user.get_full_name|default:user.username }}
+        </span>
+    </div>
+
+    <div class="card">
+        {% if registros %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horas Trabalhadas</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros %}
+                        <tr>
+                            <td>{{ registro.data|date:"d/m/Y" }}</td>
+                            <td>{{ registro.horas_trabalhadas }}</td>
+                            <td>{{ registro.observacao|default:"-" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; Primeira</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    {% endif %}
+
+                    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p style="text-align: center; color: var(--subtext); padding: 20px 0;">
+                Nenhum registro de ponto encontrado.
+            </p>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'core:dashboard' %}" class="btn">Voltar ao Dashboard</a>
+    </div>
+{% endblock %}
