@@ -173,8 +173,6 @@ Existem duas formas:
 ├── static/
 │   └── css/
 │       └── style.css
-├── media/          # (uploads)
-├── logs/           # (arquivos de log)
 ├── .env
 ├── manage.py
 └── requirements.txt
