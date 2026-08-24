@@ -6,21 +6,32 @@ body {
     color: var(--text);
     transition: 0.2s;
     padding: 0;
+    font-size: 15px;
+    line-height: 1.5;
 }
 /* Variáveis Adwaita */
 :root {
     --blue-3: #3584e4;
+    --blue-4: #2870c9;
     --blue-5: #1a5fb4;
     --green-4: #26a269;
+    --green-5: #1b8553;
     --yellow-4: #e5a50a;
+    --yellow-5: #c88800;
     --red-4: #e01b24;
+    --red-5: #c01c28;
     --purple-3: #9141ac;
     --window-bg: #fafafb;
     --card-bg: #ffffff;
     --view-bg: #ffffff;
-    --border: rgba(0,0,0,0.08);
+    --headerbar-bg: #ebebed;
+    --border: rgba(0,0,0,0.09);
+    --border-strong: rgba(0,0,0,0.15);
     --text: #1e1e1e;
     --subtext: #5c5c5c;
+    --shadow-1: 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-2: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --focus-ring: 0 0 0 2px var(--card-bg), 0 0 0 4px rgba(53,132,228,0.5);
     --radius-window: 12px;
     --radius-card: 12px;
     --radius-button: 6px;
@@ -30,14 +41,19 @@ body {
         --window-bg: #242424;
         --card-bg: #303030;
         --view-bg: #1e1e1e;
-        --border: rgba(255,255,255,0.08);
+        --headerbar-bg: #2d2d2d;
+        --border: rgba(255,255,255,0.09);
+        --border-strong: rgba(255,255,255,0.16);
         --text: #ffffff;
         --subtext: #b3b3b3;
+        --shadow-1: 0 1px 2px rgba(0,0,0,0.2);
+        --shadow-2: 0 1px 4px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25);
+        --focus-ring: 0 0 0 2px var(--card-bg), 0 0 0 4px rgba(53,132,228,0.6);
     }
 }
 /* Header bar */
 .header-bar {
-    background: var(--window-bg);
+    background: var(--headerbar-bg);
     border-bottom: 1px solid var(--border);
     padding: 12px 24px;
     display: flex;
@@ -46,10 +62,12 @@ body {
     position: sticky;
     top: 0;
     z-index: 10;
+    box-shadow: var(--shadow-1);
 }
 .header-bar h1 {
     font-size: 20px;
     font-weight: 700;
+    letter-spacing: -0.01em;
 }
 .header-bar .user-info {
     font-size: 14px;
@@ -72,8 +90,9 @@ body {
 /* Cards */
 .card {
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: var(--radius-card);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-2);
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -81,22 +100,38 @@ body {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
+    letter-spacing: -0.01em;
 }
 /* Botões */
 .btn {
     display: inline-block;
     padding: 8px 16px;
     border-radius: var(--radius-button);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     background: var(--card-bg);
     color: var(--text);
     text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: 0.15s;
+    box-shadow: var(--shadow-1);
+    transition: background-color 0.15s, box-shadow 0.15s;
 }
 .btn:hover {
     background: var(--border);
+}
+.btn:active {
+    background: var(--border-strong);
+    box-shadow: none;
+}
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 .btn-primary {
     background: var(--blue-3);
@@ -104,6 +139,9 @@ body {
     border: none;
 }
 .btn-primary:hover {
+    background: var(--blue-4);
+}
+.btn-primary:active {
     background: var(--blue-5);
 }
 .btn-danger {
@@ -112,7 +150,10 @@ body {
     border: none;
 }
 .btn-danger:hover {
-    background: #c01a22;
+    background: var(--red-5);
+}
+.btn-danger:active {
+    background: #a51d24;
 }
 .btn-sm {
     padding: 4px 12px;
@@ -131,7 +172,12 @@ th, td {
 th {
     font-weight: 600;
     color: var(--subtext);
-    font-size: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+tbody tr:hover {
+    background: var(--border);
 }
 /* Mensagens */
 .messages {
@@ -142,6 +188,7 @@ th {
     padding: 10px 16px;
     border-radius: var(--radius-button);
     margin-bottom: 4px;
+    box-shadow: var(--shadow-1);
 }
 .messages .success {
     background: var(--green-4);
@@ -164,18 +211,28 @@ form label {
     display: block;
     font-weight: 500;
     margin-top: 12px;
+    font-size: 14px;
 }
 form input, form select, form textarea {
     width: 100%;
     padding: 8px 12px;
-    border: 1px solid var(--border);
+    margin-top: 4px;
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-button);
     background: var(--view-bg);
     color: var(--text);
     font-size: 14px;
+    font-family: inherit;
+    transition: box-shadow 0.15s, border-color 0.15s;
 }
-form input:focus, form select:focus {
-    outline: 2px solid rgba(53,132,228,0.4);
+form input:focus, form select:focus, form textarea:focus {
+    outline: none;
+    border-color: var(--blue-3);
+    box-shadow: 0 0 0 2px rgba(53,132,228,0.25);
+}
+form input:disabled, form select:disabled, form textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 .form-actions {
     margin-top: 16px;
@@ -191,14 +248,20 @@ form input:focus, form select:focus {
 }
 .pagination a, .pagination span {
     padding: 6px 12px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-button);
     text-decoration: none;
     color: var(--text);
+    background: var(--card-bg);
+    transition: background-color 0.15s;
+}
+.pagination a:hover {
+    background: var(--border);
 }
 .pagination .current {
     background: var(--blue-3);
     color: white;
+    border-color: var(--blue-3);
 }
 /* Filtros */
 .filters {
@@ -209,8 +272,10 @@ form input:focus, form select:focus {
 }
 .filters input, .filters select {
     padding: 6px 12px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-button);
+    background: var(--view-bg);
+    color: var(--text);
 }
 .filters .btn {
     align-self: flex-end;
@@ -224,14 +289,16 @@ form input:focus, form select:focus {
 }
 .stat-box {
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: var(--radius-card);
     padding: 16px;
     text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-1);
 }
 .stat-box .number {
     font-size: 28px;
     font-weight: 700;
+    letter-spacing: -0.02em;
 }
 .stat-box .label {
     font-size: 14px;
