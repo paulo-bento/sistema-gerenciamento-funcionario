@@ -146,7 +146,7 @@ Existem duas formas:
 | Perfil | Usuário | Senha |
 |--------|---------|-------|
 | Gerente | `admin` | `admin123` |
-| Funcionário | `joao` | `123456` |
+| Funcionário | `funcionario` | `funcionario123` |
 
 *(Os usuários devem ser criados conforme as instruções acima.)*
 
